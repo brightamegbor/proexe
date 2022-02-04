@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-white {
+  background: white !important;
+}
+
+.users-card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.table>:not(:first-child) {
+  border-top: none !important;
+}
+
+.table-head {
+  line-height: 3.8rem !important;
+  background: rgb(250, 248, 248);
+}
+
+.table-body-row {
+  line-height: 3.5rem !important;
+}
