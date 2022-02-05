@@ -1,4 +1,4 @@
-import { Card, Button, Table, Modal } from 'react-bootstrap'
+import { Card, Button, Table, } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers, removeUser } from "../store/users";
 import { useEffect, useState } from "react";
