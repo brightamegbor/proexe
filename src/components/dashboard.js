@@ -1,39 +1,48 @@
-import { Card, Button, Table, } from 'react-bootstrap'
+import { Card, Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUsers, removeUser } from "../store/users";
+import { loadUsers, removeUser, sortUsersbyId, sortUsersbyUsername } from "../store/users";
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-import { LinearProgress } from '@mui/material';
-import DeleteModal from './modal';
-
-
+import { Link } from "react-router-dom";
+import { LinearProgress } from "@mui/material";
+import DeleteModal from "./modal";
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 function Dashboard() {
-
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.list.concat().sort((a, b) => a.id - b.id));
+  const users = useSelector((state) => state.list);
   const loading = useSelector((state) => state.loading);
 
   const [modalShow, setModalShow] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  
+
+  const [sortConfig, setSortConfig] = useState("a-z");
+
   useEffect(() => {
-    dispatch(loadUsers())
+    dispatch(loadUsers());
+    dispatch(sortUsersbyId(""));
   }, [dispatch]);
 
   const deleteUser = async (user) => {
-
     await setCurrentUser(user);
 
     setModalShow(true);
-
-  }
+  };
 
   const confirmDelete = () => {
     // console.log(currentUser);
     dispatch(removeUser(currentUser));
     setModalShow(false);
-  }
+  };
+
+  const requestSort = () => {
+    if (sortConfig === "a-z") {
+      dispatch(sortUsersbyUsername(sortConfig));
+      setSortConfig("z-a");
+    } else {
+      dispatch(sortUsersbyUsername(sortConfig));
+      setSortConfig("a-z");
+    }
+  };
 
   return (
     <div className="container">
@@ -64,7 +73,14 @@ function Dashboard() {
                   <tr>
                     <th className="table-body-id">Id</th>
                     <th>Name</th>
-                    <th>Username</th>
+                    <th>
+                      Username{" "}
+                      {sortConfig === "a-z" ? (
+                        <BsFillCaretDownFill onClick={() => requestSort()} />
+                      ) : (
+                        <BsFillCaretUpFill onClick={() => requestSort()} />
+                      )}{" "}
+                    </th>
                     <th>Email</th>
                     <th>City</th>
                     <th>Edit</th>
@@ -72,7 +88,6 @@ function Dashboard() {
                   </tr>
                 </thead>
 
-                {/* body */}
                 <tbody>
                   {users.map((user) => (
                     <tr className="table-body-row" key={user.id}>
@@ -96,23 +111,22 @@ function Dashboard() {
                       </td>
                     </tr>
                   ))}
-
                 </tbody>
               </Table>
 
               {/* no user */}
-                  {Object.keys(users).length === 0 && 
-                  <div className="text-center">No user available yet, consider adding</div>
-                  }
-              
-
+              {Object.keys(users).length === 0 && (
+                <div className="text-center">
+                  No user available yet, consider adding
+                </div>
+              )}
             </div>
-                      <DeleteModal
-                        show={modalShow}
-                        user={currentUser}
-                        onHide={() => setModalShow(false)}
-                        delete={() => confirmDelete()}
-                      />
+            <DeleteModal
+              show={modalShow}
+              user={currentUser}
+              onHide={() => setModalShow(false)}
+              delete={() => confirmDelete()}
+            />
           </Card.Body>
         </Card>
       </div>
@@ -120,4 +134,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard
+export default Dashboard;

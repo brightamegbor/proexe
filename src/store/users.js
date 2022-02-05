@@ -74,13 +74,38 @@ const slice = createSlice({
           ...users
         ];
       },
+
+      sortUserDataById: (state, action) => {
+
+        const usersState = current(state);
+        const users = usersState.list.concat().sort((a, b) => a.id - b.id);
+
+        state.list = [
+          ...users
+        ];
+      },
+
+      sortUserDataByUsername: (state, action) => {
+
+        const usersState = current(state);
+        const sortBy = action.by;
+        const users = usersState.list.concat().sort(
+          (a, b) => sortBy === "a-z" ? 
+          a.username.localeCompare(b.username)
+          : b.username.localeCompare(a.username));
+
+        state.list = [
+          ...users
+        ];
+      },
   },
 });
 
 export default slice.reducer;
 
 const { usersRequested, usersReceived, usersRequestFailed, 
-  updateUsersData, addUserData, removeUserData } = slice.actions;
+  updateUsersData, addUserData, removeUserData, sortUserDataByUsername,
+  sortUserDataById } = slice.actions;
 
 const url = "/data";
 
@@ -114,5 +139,19 @@ export const removeUser = (user) => {
   return {
     type: removeUserData.type,
     user
+   }
+}
+
+export const sortUsersbyId = (sortBy) => {
+  return {
+    type: sortUserDataById.type,
+    by: sortBy
+   }
+}
+
+export const sortUsersbyUsername = (sortBy) => {
+  return {
+    type: sortUserDataByUsername.type,
+    by: sortBy
    }
 }
