@@ -18,6 +18,7 @@ code {
 
 .users-card {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 5px;
 }
 
 .table>:not(:first-child) {
@@ -31,4 +32,17 @@ code {
 
 .table-body-row {
   line-height: 3.5rem !important;
+}
+
+.form-label-name {
+  width: 300px;
+}
+
+.ps-100 {
+  padding-left: 240px;
+}
+
+.table-body-id {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
 }
