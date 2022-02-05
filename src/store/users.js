@@ -14,9 +14,8 @@ const slice = createSlice({
       },
 
       usersReceived: (users, action) => {
-        // Object.assign({}, users.list, {list: action.payload, loading: false})
           users.list = users.list.length ? [...users.list, ...action.payload] : action.payload;
-          // users.list = action.payload;
+          
           users.list = users.list.filter((val,id,array) => array.findIndex(va => va.id === val.id) === id);
           console.log(users.list);
           users.loading = false;
@@ -27,7 +26,6 @@ const slice = createSlice({
       },
 
       updateUsersData: (state, action) => {
-        // if(user.id !== action.id) return user;
 
         const usersState = current(state);
         const user = action.user;
@@ -41,13 +39,6 @@ const slice = createSlice({
             ...user,
           }
         ];
-        // return [
-        //   ...users,
-        //   {
-        //     list: state.list,
-        //     loading: false
-        //   }
-        // ];
       },
 
       addUserData: (state, action) => {

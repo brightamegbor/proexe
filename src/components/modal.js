@@ -14,7 +14,6 @@ function DeleteModal(props) {
       </Modal.Title>
     </Modal.Header>
     <Modal.Body>
-      {/* <h4>Centered Modal</h4> */}
       <p>
         Confirm delete of {props.user.name}
       </p>

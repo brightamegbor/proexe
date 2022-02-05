@@ -1,7 +1,7 @@
 import { Card, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, sortUsersbyId, updateUsers } from "../store/users";
-import { useEffect, useMemo } from "react";
+import { addUser, updateUsers } from "../store/users";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -36,20 +36,17 @@ function CreateUpdateUser(props) {
     }, [userData])
   });
 
-  useEffect(() => {
-    // console.log(users);
-  }, [users]);
-
   function saveUser(data) {
     var newData = Object.assign({}, userData);
     newData["email"] = data.email;
     newData["name"] = data.name;
 
+    // get the highest id from the users list
     var highId = users.reduce((acc, uu) => acc = acc > uu.id ? acc : uu.id, 0);
-    console.log(typeof highId);
 
     if(Object.keys(userData).length === 0) {
 
+      // dummy data
       const newValu = {
         id: 1,
         name: "Leanne Graham",
@@ -78,7 +75,7 @@ function CreateUpdateUser(props) {
         
       addData["email"] = data.email;
       addData["name"] = data.name;
-      addData["id"] = highId + 1;
+      addData["id"] = highId + 1; // add 1 to the last highest id
 
       dispatch(addUser(addData));
 
@@ -86,15 +83,7 @@ function CreateUpdateUser(props) {
       navigate(-1);
       return;
     }
-
-    // console.log(newData);
     dispatch(updateUsers(newData));
-    // dispatch({
-    //   type: 'users/updateUsersData',
-    //   newData
-    //  });
-    // console.log(users);
-
     navigate(-1);
   }
 
@@ -110,7 +99,6 @@ function CreateUpdateUser(props) {
             <div className="container pt-2 pb-2">
               <div className="d-flex flex-direction-row justify-content-between">
                 <p>Form</p>
-                {/* <Button className="pl-2 pr-2">Add user</Button> */}
               </div>
             </div>
           </Card.Header>

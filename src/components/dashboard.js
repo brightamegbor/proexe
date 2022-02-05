@@ -29,11 +29,11 @@ function Dashboard() {
   };
 
   const confirmDelete = () => {
-    // console.log(currentUser);
     dispatch(removeUser(currentUser));
     setModalShow(false);
   };
 
+  // sort username by A-Z or Z-A
   const requestSort = () => {
     if (sortConfig === "a-z") {
       dispatch(sortUsersbyUsername(sortConfig));
