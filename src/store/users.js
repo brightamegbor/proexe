@@ -13,11 +13,11 @@ const slice = createSlice({
           users.loading = true;
       },
 
-      usersReceived: (users, action) => 
-        Object.assign({}, users.list, {list: action.payload, loading: false})
-          // users.list = action.payload;
-          // users.loading = false;
-      ,
+      usersReceived: (users, action) => {
+        // Object.assign({}, users.list, {list: action.payload, loading: false})
+          users.list = action.payload;
+          users.loading = false;
+      },
 
       usersRequestFailed: (users, action) => {
           users.loading = false;
@@ -45,13 +45,39 @@ const slice = createSlice({
         //     loading: false
         //   }
         // ];
-      }
+      },
+
+      addUserData: (state, action) => {
+
+        const usersState = current(state);
+        const user = action.user;
+        const users = usersState.list;
+
+        state.list = [
+          ...users,
+          {
+            ...user,
+          }
+        ];
+      },
+
+      removeUserData: (state, action) => {
+
+        const usersState = current(state);
+        const user = action.user;
+        const users = usersState.list.filter(u => u.id !== user.id);
+
+        state.list = [
+          ...users
+        ];
+      },
   },
 });
 
 export default slice.reducer;
 
-const { usersRequested, usersReceived, usersRequestFailed, updateUsersData } = slice.actions;
+const { usersRequested, usersReceived, usersRequestFailed, 
+  updateUsersData, addUserData, removeUserData } = slice.actions;
 
 const url = "/data";
 
@@ -70,6 +96,20 @@ export const loadUsers = () => (dispatch) => {
 export const updateUsers = (user) => {
   return {
     type: updateUsersData.type,
+    user
+   }
+}
+
+export const addUser = (user) => {
+  return {
+    type: addUserData.type,
+    user
+   }
+}
+
+export const removeUser = (user) => {
+  return {
+    type: removeUserData.type,
     user
    }
 }

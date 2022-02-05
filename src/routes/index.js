@@ -7,6 +7,7 @@ export default function AllRoutes() {
       <Routes>
           <Route path="/" element={Dashboard} />
           <Route path=":userId" element={<CreateUpdateUser />} />
+          <Route path="add-new" element={<CreateUpdateUser />} />
       </Routes>
   )
 }

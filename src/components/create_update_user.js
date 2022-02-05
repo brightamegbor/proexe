@@ -1,6 +1,6 @@
 import { Card, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUsers } from "../store/users";
+import { addUser, updateUsers } from "../store/users";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -44,6 +44,48 @@ function CreateUpdateUser(props) {
     var newData = Object.assign({}, userData);
     newData["email"] = data.email;
     newData["name"] = data.name;
+
+    var highId = users.reduce((acc, uu) => acc = acc > uu.id ? acc : uu.id, 0);
+    console.log(typeof highId);
+
+    if(Object.keys(userData).length === 0) {
+
+      const newValu = {
+        id: 1,
+        name: "Leanne Graham",
+        username: "Bret",
+        email: "Sincere@april.biz",
+        address: {
+          street: "Kulas Light",
+          suite: "Apt. 556",
+          city: "Gwenborough",
+          zipcode: "92998-3874",
+          geo: {
+            lat: "-37.3159",
+            lng: "81.1496",
+          },
+        },
+        phone: "1-770-736-8031 x56442",
+        website: "hildegard.org",
+        company: {
+          name: "Romaguera-Crona",
+          catchPhrase: "Multi-layered client-server neural-net",
+          bs: "harness real-time e-markets",
+        },
+      };
+
+      var addData = Object.assign({}, newValu);
+        
+      addData["email"] = data.email;
+      addData["name"] = data.name;
+      addData["id"] = highId + 1;
+
+      dispatch(addUser(addData));
+
+      
+      navigate(-1);
+      return;
+    }
 
     // console.log(newData);
     dispatch(updateUsers(newData));
