@@ -18,8 +18,8 @@ function Dashboard() {
   const [currentUser, setCurrentUser] = useState({});
   
   useEffect(() => {
-    // dispatch(loadUsers())
-  }, [dispatch, users, loading]);
+    dispatch(loadUsers())
+  }, [dispatch]);
 
   const deleteUser = async (user) => {
 
@@ -97,11 +97,13 @@ function Dashboard() {
                     </tr>
                   ))}
 
-                  {Object.keys(users).length === 0 && <tr>
-                    <td><div className="">No user available yet, consider adding</div></td>
-                  </tr>}
                 </tbody>
               </Table>
+
+              {/* no user */}
+                  {Object.keys(users).length === 0 && 
+                  <div className="text-center">No user available yet, consider adding</div>
+                  }
               
 
             </div>

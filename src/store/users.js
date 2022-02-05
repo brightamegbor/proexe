@@ -15,7 +15,10 @@ const slice = createSlice({
 
       usersReceived: (users, action) => {
         // Object.assign({}, users.list, {list: action.payload, loading: false})
-          users.list = action.payload;
+          users.list = users.list.length ? [...users.list, ...action.payload] : action.payload;
+          // users.list = action.payload;
+          users.list = users.list.filter((val,id,array) => array.findIndex(va => va.id === val.id) === id);
+          console.log(users.list);
           users.loading = false;
       },
 
