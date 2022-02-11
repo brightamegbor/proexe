@@ -37,12 +37,12 @@ function CreateUpdateUser(props) {
   });
 
   function saveUser(data) {
-    var newData = Object.assign({}, userData);
+    let newData = Object.assign({}, userData);
     newData["email"] = data.email;
     newData["name"] = data.name;
 
     // get the highest id from the users list
-    var highId = users.reduce((acc, uu) => acc = acc > uu.id ? acc : uu.id, 0);
+    let highId = users.reduce((acc, uu) => acc = acc > uu.id ? acc : uu.id, 0);
 
     if(Object.keys(userData).length === 0) {
 
@@ -71,7 +71,7 @@ function CreateUpdateUser(props) {
         },
       };
 
-      var addData = Object.assign({}, newValu);
+      let addData = Object.assign({}, newValu);
         
       addData["email"] = data.email;
       addData["name"] = data.name;

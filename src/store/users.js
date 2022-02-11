@@ -17,7 +17,7 @@ const slice = createSlice({
           users.list = users.list.length ? [...users.list, ...action.payload] : action.payload;
           
           users.list = users.list.filter((val,id,array) => array.findIndex(va => va.id === val.id) === id);
-          console.log(users.list);
+          
           users.loading = false;
       },
 
@@ -27,11 +27,9 @@ const slice = createSlice({
 
       updateUsersData: (state, action) => {
 
-        const usersState = current(state);
-        const user = action.user;
-        console.log(usersState);
-        console.log(user.id);
-        const users = usersState.list.filter(u => u.id !== user.id);
+        let usersState = current(state);
+        let user = action.user;
+        let users = usersState.list.filter(u => u.id !== user.id);
 
         state.list = [
           ...users,
@@ -57,9 +55,9 @@ const slice = createSlice({
 
       removeUserData: (state, action) => {
 
-        const usersState = current(state);
-        const user = action.user;
-        const users = usersState.list.filter(u => u.id !== user.id);
+        let usersState = current(state);
+        let user = action.user;
+        let users = usersState.list.filter(u => u.id !== user.id);
 
         state.list = [
           ...users
@@ -68,8 +66,8 @@ const slice = createSlice({
 
       sortUserDataById: (state, action) => {
 
-        const usersState = current(state);
-        const users = usersState.list.concat().sort((a, b) => a.id - b.id);
+        let usersState = current(state);
+        let users = usersState.list.concat().sort((a, b) => a.id - b.id);
 
         state.list = [
           ...users
@@ -78,9 +76,9 @@ const slice = createSlice({
 
       sortUserDataByUsername: (state, action) => {
 
-        const usersState = current(state);
-        const sortBy = action.by;
-        const users = usersState.list.concat().sort(
+        let usersState = current(state);
+        let sortBy = action.by;
+        let users = usersState.list.concat().sort(
           (a, b) => sortBy === "a-z" ? 
           a.username.localeCompare(b.username)
           : b.username.localeCompare(a.username));
